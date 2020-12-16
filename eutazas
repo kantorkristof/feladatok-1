@@ -1,0 +1,148 @@
+print("1.feladat")
+
+datacards = []
+
+with open("utasadat.txt" , "r") as file:
+    content = file.read().splitlines()
+for lines in content:
+    lista = lines.split(" ")
+    dictionatry = {"megallo": lista[0], "ido":lista[1], "id":lista[2], "tipus":lista[3], "ervenyesseg":lista[4]}
+    datacards.append(dictionatry)
+print("A program sikeresen beolvasta az adatokat.\n")
+
+#print(datacards)
+
+print("2.feladat")
+
+counter = 0
+for data in datacards:
+    if data["id"]:
+        counter = counter + 1
+print(str(counter) + " utas szeretett volna felszállni a buszra.\n")
+
+print("3.feladat")
+jegyesek = 0
+berletesek = 0
+
+for data in datacards:
+    if data["tipus"] == "JGY":
+        if data["ervenyesseg"] == "0":
+          jegyesek = jegyesek + 1
+
+for data in datacards:
+    if data["tipus"] != "JGY":
+        if data["ervenyesseg"] < data["ido"]:
+          berletesek = berletesek + 1                                                                        
+
+
+print(jegyesek)
+print(berletesek)
+print("A buszvezetőnek " + str(jegyesek+berletesek) + " alkalommal kellett leszállítania utasokat.\n")
+
+
+
+
+print("4.feladat")
+stationcounter = 0
+stationnumber = 0
+megalloutasok = []
+for data in datacards:
+    if data["megallo"] == stationnumber:
+        stationcounter = stationcounter + 1
+    megalloutasok.append(str(stationnumber) + " " + str(stationcounter))    
+    stationnumber = stationnumber + 1
+    stationcounter = 0
+print(stationcounter)
+print(stationnumber)
+print("Ezt nem tudtam , szerintem egymásba ágyazott for ciklus.\n")
+
+maximum = 0 
+utasdarabmax = 0 
+for megallo in range(30):
+    utasdarab = 0 
+    for data in datacards:
+        if megallo == int(data["megallo"]):
+            utasdarab = utasdarab + 1 
+    if utasdarab > utasdarabmax:
+        utasdarabmax = utasdarab
+        maximum = data["megallo"]
+print(maximum)
+print(utasdarabmax)
+
+            
+        
+     
+
+
+
+
+print("5.feladat")
+""" Itt próbálkoztam funkcióval , de nem jött össze , a source codeját meghagytam
+berlettomb = ("TAB","NYB","NYP","RVS","GYK")
+berletcounter = 0 
+
+def berlet(berletcounter):
+ for data in datacards:
+    if data["tipus"] == berlettomb[berletcounter]:
+        if data["ervenyesseg"] >= data["ido"]:
+          tabdarab = tabdarab + 1   
+
+berlet(berletcounter)
+print(str(tabdarab) + " KEDVEZMÉNYES tanulóbérlet.")
+"""
+
+berlet = ("TAB","NYB","NYP","RVS","GYK")
+tabdarab = 0
+nybdarab = 0 
+nypdarab = 0 
+rvsdarab = 0 
+gykdarab = 0
+for data in datacards:
+    if data["tipus"] == berlet[0]:
+        if data["ervenyesseg"] >= data["ido"]:
+          tabdarab = tabdarab + 1   
+for data in datacards:
+    if data["tipus"] == berlet[1]:
+        if data["ervenyesseg"] >= data["ido"]:
+          nybdarab = nybdarab + 1   
+for data in datacards:
+    if data["tipus"] == berlet[2]:
+        if data["ervenyesseg"] >= data["ido"]:
+          nypdarab = nypdarab + 1   
+for data in datacards:
+    if data["tipus"] == berlet[3]:
+        if data["ervenyesseg"] >= data["ido"]:
+          rvsdarab = rvsdarab + 1   
+for data in datacards:
+    if data["tipus"] == berlet[4]:
+        if data["ervenyesseg"] >= data["ido"]:
+          gykdarab = gykdarab + 1   
+print(str(tabdarab) + " KEDVEZMÉNYES tanulóbérlet.")
+print(str(nybdarab) + " KEDVEZMÉNYES nyugdíjas bérlet.")
+print(str(nypdarab) + " INGYENES 65 év feletti bérlet.")
+print(str(rvsdarab) + " INGYENES Rokkant, vak, siket vagy kísérő bérlet.")
+print(str(gykdarab) + " INGYENES Iskolakezdés előtti gyerekbérlet.\n")
+print(str(nypdarab+rvsdarab+gykdarab) + " Ingyenes.")
+print(str(nybdarab+tabdarab) + " Kedvezményes.")
+
+print("6.feladat")
+def napokszama(e1,h1,n1,e2,h2,n2):
+    h1 = (h1+9)%12
+    e1 = e1-h1/10
+    d1 = 365*e1+e1/4-e1/100+e1/400+(h1*306+5)/10+n1-1
+    h2 = (h2+9)%12
+    e2 = e2-h2/10
+    d2 = 365*e2+e2/4-e2/100+e2/400+(h2*306+5)/10+n2-1
+    print(d2-d1)
+    return d2-d1
+print("A függvény kész")
+print("7.feladat")
+print("Kiszedném a datacardsból az időt , felszeletelném 3 részre, betölteném az e1, h1, n1 változókba  pl: 20201216-1648 --> e1=2020 h1=12 n1=16\n")
+print("Ezután a bekérnék a felhasználótól egy dátumot ééééhhnn formátumban, felszeletelném , ők lennének az e1, h1,  n1\n")
+print("Bepakolnám őket a napokszama függvénybe\n")
+print("Új txt fájlt hoznék létre és beleküldeném az adatokat data[id] + space + éééé-hh-nn\n")
+ujfile = open("figyelmeztetes.txt", "a")
+for data in datacards:
+    ujfile.write(str(data["id"] + ' ' + "éééé-hh-nn"))
+    ujfile.write("\n")
+ujfile.close()
